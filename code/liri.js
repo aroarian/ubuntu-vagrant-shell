@@ -1,4 +1,3 @@
-// console.log("works");
 require("dotenv").config();
 var keys = require("./keys")
 var request = require("request");
@@ -8,8 +7,7 @@ var spotify = new Spotify(keys.spotify);
 
 var command = process.argv[2];
 var input = process.argv[3]
-// console.log(command);
-// console.log(keys);
+
 
 if (command === "concert-this"){
     concertThis();
@@ -53,6 +51,7 @@ function spotifyThis(query){
 
   //console.log(data.tracks.items[0]); 
   console.log("--------------------------------")
+  console.log("");
   console.log(data.tracks.items[0].artists[0].name); 
   console.log("");
   console.log(data.tracks.items[0].name);
@@ -60,6 +59,7 @@ function spotifyThis(query){
   console.log(data.tracks.items[0].external_urls.spotify);
   console.log("");
   console.log(data.tracks.items[0].album.name);
+  console.log("");
   console.log("--------------------------------")
   });
 }
@@ -67,14 +67,38 @@ function spotifyThis(query){
 function movieThis(movie){
     if (movie){
         movie = movie
-    }else {
+    }
+    
+    else {
         movie = "Mr. Nobody";
     }
+
     request(`http://www.omdbapi.com/?apikey=c5a8df09&t=${movie}`, function(error, response, data){
+        if (error) {
+            return console.log('Error occurred: ' + error);
+          }
 
+        console.log("--------------------------------")
+        console.log("");
         console.log(JSON.parse(data).Title);
+        console.log("");
+        console.log(JSON.parse(data).Year);
+        console.log("");
+        console.log(JSON.parse(data).imdbRating);
+        console.log("");
+        console.log(JSON.parse(data).Ratings[1].Value);
+        console.log("");
+        console.log(JSON.parse(data).Country);
+        console.log("");
+        console.log(JSON.parse(data).Language);
+        console.log("");
+        console.log(JSON.parse(data).Plot);
+        console.log("");
+        console.log(JSON.parse(data).Actors);
+        console.log("");
+        console.log("--------------------------------")
     })
-
+    
     
 }
 
