@@ -2,8 +2,10 @@ require("dotenv").config();
 var keys = require("./keys")
 var request = require("request");
 var Spotify = require("node-spotify-api");
+var Bands = require("bandsintown-events")
 
 var spotify = new Spotify(keys.spotify);
+var bands = new Bands(keys.bandsIn);
 
 var command = process.argv[2];
 var input = process.argv[3]
@@ -29,8 +31,21 @@ else {
     console.log("command unknown");
 }
 
-function concertThis(){
-    console.log("concert is running");
+function concertThis(artist){
+    if (artist){
+        artist = artist
+    }
+    
+    else {
+        artist = "Eagles";
+    }
+
+    request(`https://rest.bandsintown.com/artists/${artist}/events?app_id=${bands}`, function(error, response, data){
+        if (error) {
+            return console.log('Error occurred: ' + error);
+          }
+          console.log(data);
+    })
 }
 
 function spotifyThis(query){
